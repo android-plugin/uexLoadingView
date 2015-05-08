@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    
+    <dimen name="slidingmenu_offset">60dp</dimen>
+    <dimen name="slidingmenu_width">240dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+	
+    <dimen name="plugin_loadingview_color_point_width">20dip</dimen>
+    <dimen name="plugin_loadingview_color_point_margin">3dip</dimen>
+    <dimen name="plugin_loadingview_single_point_width">8dip</dimen>
+    <dimen name="plugin_loadingview_single_point_margin">4dip</dimen>
+</resources>

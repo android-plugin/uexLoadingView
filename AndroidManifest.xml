@@ -28,13 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="org.zywx.wbpalmstar.plugin.loadingview.ACELoadingViewActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-        </activity>
     </application>
     <!-- 用于读取手机当前的状态-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>

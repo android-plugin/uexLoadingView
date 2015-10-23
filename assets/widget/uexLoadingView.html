@@ -39,10 +39,21 @@
 	 		}
 	 	}
 
-		function openLoadingView(){
+		function openLoadingView(type){
 		    //var jsonstr = '{"x":200, "y":500, "w":240, "h":40, "style":{"styleId":0, "pointNum":4, "pointColor":["#ff4444", "#ffbb33", "#99cc00", "#33b5e5"]}}';
-		    var jsonstr = '{"x":200, "y":500, "w":150, "h":40, "style":{"styleId":1, "pointNum":4, "pointColor":["#ffffff"]}}';
-    		uexLoadingView.open(jsonstr);
+		    var jsonstr = {
+		        x:200,
+		        y:500,
+		        w:350,
+		        h:40,
+		        style:
+		        {
+		            styleId:type,
+		            pointNum:4,
+		            pointColor:["#ffffff"]
+		        }
+		    };
+    		uexLoadingView.open(JSON.stringify(jsonstr));
 		}
 		
 		function closeLoadingView(){
@@ -60,7 +71,8 @@
 	    <div id="content" class="ub-f1 tx-l t-bla" style="">
 	    <div class="conbor">
 			<div class="consj">
-				<input type="button" value="打开" onclick="openLoadingView();">
+				<input type="button" value="打开样式1" onclick="openLoadingView(0);">
+                <input type="button" value="打开样式2" onclick="openLoadingView(1);">
 				<input type="button" value="关闭" onclick="closeLoadingView();">
 	        </div>
 	    </div>

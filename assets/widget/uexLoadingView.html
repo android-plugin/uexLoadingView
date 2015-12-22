@@ -55,6 +55,17 @@
 		    };
     		uexLoadingView.open(JSON.stringify(jsonstr));
 		}
+
+		function openCircleLoading () {
+		 	var jsonstr = {
+		        x:500,
+		        y:100,
+		        w:350,
+		        h:100
+		    };
+    		uexLoadingView.openCircleLoading(JSON.stringify(jsonstr));
+    		setTimeout(closeLoadingView, 5000);
+		}
 		
 		function closeLoadingView(){
     		uexLoadingView.close();
@@ -73,6 +84,7 @@
 			<div class="consj">
 				<input type="button" value="打开样式1" onclick="openLoadingView(0);">
                 <input type="button" value="打开样式2" onclick="openLoadingView(1);">
+				<input type="button" value="打开样式3" onclick="openCircleLoading();">
 				<input type="button" value="关闭" onclick="closeLoadingView();">
 	        </div>
 	    </div>

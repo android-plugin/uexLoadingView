@@ -5,6 +5,7 @@
         className="org.zywx.wbpalmstar.plugin.loadingview.EUExLoadingView" uexName="uexLoadingView" >
         <method name="open" />
         <method name="close" />
+        <method name="openCircleLoading" />
     </plugin>
 
 </uexplugins>

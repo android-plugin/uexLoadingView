@@ -1,23 +1,23 @@
 package org.zywx.wbpalmstar.plugin.loadingview;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.zywx.wbpalmstar.base.BUtility;
-import org.zywx.wbpalmstar.engine.EBrowserView;
-import org.zywx.wbpalmstar.engine.universalex.EUExBase;
-import org.zywx.wbpalmstar.plugin.loadingview.vo.OpenDataVO;
-
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.zywx.wbpalmstar.engine.EBrowserView;
+import org.zywx.wbpalmstar.engine.universalex.EUExBase;
+import org.zywx.wbpalmstar.plugin.loadingview.vo.OpenDataVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +29,13 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
 
 	public static final int LOADINGVIEW_MSG_OPEN = 0;
 	public static final int LOADINGVIEW_MSG_CLOSE = 1;
+	public static final int LOADINGVIEW_MSG_OPEN_CIRCLE_LOADING = 2;
     private ACELoadingView mView;
+    private ProgressDialog progress;
 
 	public EUExLoadingView(Context context, EBrowserView view) {
 		super(context, view);
+        CRes.init(mContext);
 	}
 
 	private void sendMessageWithType(int msgType, String[] params) {
@@ -52,13 +55,15 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
 	public void onHandleMessage(Message msg) {
 		if (msg.what == LOADINGVIEW_MSG_OPEN) {
 			handleOpen(msg);
-		} else {
+		} else if (msg.what == LOADINGVIEW_MSG_OPEN_CIRCLE_LOADING ) {
+			handleOpenCircleLoading(msg);
+		}else {
 			handleMessageInChatKeyboard(msg);
 		}
 	}
 
 	private void handleMessageInChatKeyboard(Message msg) {
-        if (msg == null || mView == null){
+        if (msg == null || (mView == null && progress == null)){
             return;
         }
         switch (msg.what) {
@@ -69,11 +74,16 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
 	}
 
 	private void handleClose(ACELoadingView view) {
-		mBrwView.removeViewFromCurrentWindow(view);
+        if (progress != null) {
+            progress.dismiss();
+        }
+        if (view != null) {
+            mBrwView.removeViewFromCurrentWindow(view);
+        }
     }
 
     private void handleOpen(Message msg) {
-        if (mView != null) {
+        if (mView != null || progress != null) {
             handleClose(mView);
         }
 		String[] params = msg.getData().getStringArray(
@@ -117,6 +127,37 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
 		}
 	}
 
+
+	private void handleOpenCircleLoading(Message msg) {
+		if (mView != null || progress != null) {
+			handleClose(mView);
+		}
+		String[] params = msg.getData().getStringArray(
+				LOADINGVIEW_FUN_PARAMS_KEY);
+		try {
+			JSONObject json = new JSONObject(params[0]);
+			int x = Integer.parseInt(json.getString("x"));
+			int y = Integer.parseInt(json.getString("y"));
+			int w = Integer.parseInt(json.getString("w"));
+			int h = Integer.parseInt(json.getString("h"));
+            progress = new ProgressDialog(mContext, CRes.plugin_loading_view_progress_style);
+            Window dialogWindow = progress.getWindow();
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
+
+            lp.x = x;
+            lp.y = y;
+            lp.width = w;
+            lp.height = h;
+            dialogWindow.setAttributes(lp);
+            progress.setIndeterminate(true);
+            progress.setCancelable(false);
+            progress.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void addView2CurrentWindow(View child,
 			RelativeLayout.LayoutParams parms) {
 		int l = (int) (parms.leftMargin);
@@ -134,6 +175,7 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
 		sendMessageWithType(LOADINGVIEW_MSG_OPEN, params);
 	}
 
+	public void openCircleLoading(String [] params) {sendMessageWithType(LOADINGVIEW_MSG_OPEN_CIRCLE_LOADING, params);}
 	public void close(String[] params) {
 		sendMessageWithType(LOADINGVIEW_MSG_CLOSE, params);
 	}

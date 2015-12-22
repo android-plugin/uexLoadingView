@@ -3,6 +3,7 @@
     <plugin
         className="org.zywx.wbpalmstar.plugin.loadingview.EUExLoadingView" uexName="uexLoadingView" >
         <method name="open" />
+        <method name="openCircleLoading" />
         <method name="close" />
     </plugin>
 </uexplugins>

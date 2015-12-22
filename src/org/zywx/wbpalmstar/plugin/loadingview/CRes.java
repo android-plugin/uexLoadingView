@@ -1,9 +1,9 @@
 package org.zywx.wbpalmstar.plugin.loadingview;
 
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.res.Resources;
+
+import java.util.Locale;
 
 public class CRes{
 	private static boolean init;
@@ -21,6 +21,8 @@ public class CRes{
 	public static int plugin_loadingview_single_point_margin;
 	
 	public static int plugin_loadingview_color_point_colors;
+	public static int plugin_loading_view_progress_style;
+
 	public static boolean init(Context context){
 		if(init){
 			return init;
@@ -42,6 +44,7 @@ public class CRes{
 		plugin_loadingview_single_point_margin=res.getIdentifier("plugin_loadingview_single_point_margin", "dimen", packg);
 		
 		plugin_loadingview_color_point_colors=res.getIdentifier("plugin_loadingview_color_point_colors", "array", packg);
+		plugin_loading_view_progress_style = res.getIdentifier("plugin_loading_view_progress_style", "style", packg);
 		Locale language = Locale.getDefault();
 		if(language.equals(Locale.CHINA) 
 				|| language.equals(Locale.CHINESE) 

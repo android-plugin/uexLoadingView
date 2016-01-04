@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -132,30 +129,10 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
 		if (mView != null || progress != null) {
 			handleClose(mView);
 		}
-		String[] params = msg.getData().getStringArray(
-				LOADINGVIEW_FUN_PARAMS_KEY);
-		try {
-			JSONObject json = new JSONObject(params[0]);
-			int x = Integer.parseInt(json.getString("x"));
-			int y = Integer.parseInt(json.getString("y"));
-			int w = Integer.parseInt(json.getString("w"));
-			int h = Integer.parseInt(json.getString("h"));
-            progress = new ProgressDialog(mContext, CRes.plugin_loading_view_progress_style);
-            Window dialogWindow = progress.getWindow();
-            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-            dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
-
-            lp.x = x;
-            lp.y = y;
-            lp.width = w;
-            lp.height = h;
-            dialogWindow.setAttributes(lp);
-            progress.setIndeterminate(true);
-            progress.setCancelable(false);
-            progress.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		progress = new ProgressDialog(mContext, CRes.plugin_loading_view_progress_style);
+		progress.setIndeterminate(true);
+		progress.setCancelable(false);
+		progress.show();
 	}
 
 	private void addView2CurrentWindow(View child,

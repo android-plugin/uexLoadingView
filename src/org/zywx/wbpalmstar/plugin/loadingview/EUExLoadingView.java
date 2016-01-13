@@ -74,7 +74,7 @@ public class EUExLoadingView extends EUExBase implements Parcelable {
         if (progress != null) {
             progress.dismiss();
         }
-        if (view != null) {
+        if (view != null && mBrwView != null) {
             mBrwView.removeViewFromCurrentWindow(view);
         }
     }
